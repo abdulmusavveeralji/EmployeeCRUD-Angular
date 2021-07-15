@@ -1,0 +1,150 @@
+<div class="container" id="main-container">
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Employee Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone No.</th>
+        <th scope="col mr-2">Edit</th>
+        <th scope="col md">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td scope="row" > {{ employee.id }}</td>
+        <td> {{employee.empName}} </td>
+        <td> {{ employee.email }}</td>
+        <td> {{ employee.phone }}</td>
+        <td><a class="btn btn-dark" (click)="onModalClick(employee, 'update')" >Edit</a></td>
+        <td><a (click)="onModalClick(employee, 'delete')" type="button" class="btn btn-danger" >Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <div class="container bg-light">
+    <div class="col-md-12 text-center">
+        <button [disabled]="!addForm.valid" (click)="onModalClick(null, 'add')" class="btn btn-primary" > Create an Employee</button>
+    </div>
+  </div>
+
+
+
+
+<!-- Add Modal -->
+<div class="modal fade" id="addEmployeeModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
+        
+          <div class="form-group">
+          <label for="employeeName">Employee Name</label>
+          <input ngModel name="empName" type="text" class="form-control" id="employeeName" >
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+
+        <div class="form-group">
+          <label for="employeeName">Email</label>
+          <input type="text" ngModel name="email" class="form-control" id="employeeName"  >
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+
+        <div class="form-group">
+          <label for="employeeName">PhoneNo.</label>
+          <input type="text" ngModel name="phone"  class="form-control" id="employeeName" >
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- update Modal -->
+<div class="modal fade" id="updateEmployeeModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form #editForm="ngForm">
+        
+          <div class="form-group" >
+          <label for="employeeName">Employee Name</label>
+          <input ngModel="{{editEmployee?.empName}}" name="empName" type="text" class="form-control" id="employeeName" >
+          </div>
+
+          <input type="hidden" name="id" ngModel="{{editEmployee?.id}}" class="form-control" id="id"  placeholder="Email">
+
+          <div class="form-group">
+            <label for="employeeName">Email</label>
+            <input type="text" ngModel={{editEmployee?.email}} name="email" class="form-control" id="employeeName"  >
+          </div>
+
+          <div class="form-group">
+            <label for="employeeName">PhoneNo.</label>
+            <input type="text" ngModel="{{editEmployee?.phone}}" name="phone"  class="form-control" id="employeeName" >
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" id="update-employee-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button (click)="onUpdateEmployee(editForm.value)" type="submit"  class="btn btn-primary">Update</button>
+          </div>
+        </form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteEmployeeModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <form #deleteEmp="ngForm"> -->
+          <div class="modal-body">
+            Do you want to delete this employee {{deleteEmployee?.id}} ?
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="delete-employee-form" data-dismiss="modal">No</button>
+            <button (click)="onDeleteEmployee(deleteEmployee.id)" data-dismiss="modal" type="submit" class="btn btn-primary" >Yes</button>
+          </div>  
+      <!-- </form> -->
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
