@@ -33,6 +33,9 @@ export class AppComponent implements OnInit{
 
   public onAddEmployee(addForm: NgForm): void {
     document.getElementById('add-employee-form')?.click();
+    console.log(addForm.value);
+    addForm.value.phone = "+" + addForm.value.countryCode +  addForm.value.phone;
+    console.log(addForm.value);
     this.employeeService.addEmployee(addForm.value).subscribe(
       (response: Employee) =>{
         console.log("Error" + response);
